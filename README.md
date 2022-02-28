@@ -1,1 +1,2 @@
-# jenkins-example
+# playjenkins
+Jenkins Playground
