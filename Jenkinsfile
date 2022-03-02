@@ -16,20 +16,22 @@ pipeline {
     }
 
     stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+      agent {
+        docker.withRegistry('https://docker.myweb.example.com', 'docker-registry-id') {
+          dockerImage = docker.build("${env.registry}:${env.BUILD_NUMBER}")
         }
+      }
+      steps{
+        sh 'echo Building image...'
       }
     }
 
     stage('Push Image') {
+      agent {
+        dockerImage.push()
+      }
       steps{
-        script {
-          docker.withRegistry( "" ) {
-            dockerImage.push()
-          }
-        }
+        sh 'echo Pushing image...'
       }
     }
 
