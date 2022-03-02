@@ -19,6 +19,8 @@ spec:
       - image: docker.myweb.example.com/prueba:1
         imagePullPolicy: Always
         name: prueba
+      imagePullSecrets:
+      - name: regcred
 
 ---
 apiVersion: v1
