@@ -50,12 +50,11 @@ pipeline {
         script {
           def filename = './prueba.yaml'
           def data = readYaml file: filename
-          println data
-          println data.spec.template.spec.containers[0]
-          println data.spec.template.spec.containers[0][0]
+          println data.spec.template.spec.containers[0][0].image
           data.spec.template.spec.containers[0][0].image = imagename + ":$BUILD_NUMBER"
+          println data.spec.template.spec.containers[0][0].image
           writeYaml file: filename, data: data
-          kubernetesDeploy(configs: './prueba.yaml', kubeconfigId: kubeconfigCredential)
+          kubernetesDeploy(configs: filename, kubeconfigId: kubeconfigCredential)
         }
       }
     }
