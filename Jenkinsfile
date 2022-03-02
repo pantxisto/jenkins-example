@@ -7,7 +7,12 @@ pipeline {
   }
 
 
-  agent any
+  agent {
+      kubernetes {
+          defaultContainer 'jnlp'
+          yamlFile 'agent-pod.yaml'
+      }
+  }
 
   stages {
 
@@ -19,17 +24,21 @@ pipeline {
 
     stage('Build image') {
       steps {
-        script {
-          dockerImage = docker.build imagename + ":$BUILD_NUMBER"
+        container('docker') {
+          script {
+            dockerImage = docker.build imagename + ":$BUILD_NUMBER"
+          }
         }
       }
     }
 
     stage('Push Image') {
       steps{
-        script {
-          docker.withRegistry( 'https://docker.myweb.example.com', registryCredential ) {
-            dockerImage.push()
+        container('docker') {
+          script {
+            docker.withRegistry( 'https://docker.myweb.example.com', registryCredential ) {
+              dockerImage.push()
+            }
           }
         }
       }
