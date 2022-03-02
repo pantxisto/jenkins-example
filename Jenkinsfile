@@ -48,11 +48,11 @@ pipeline {
     stage('Deploy App') {
       steps {
         script {
-          def filename = './prueba.yml'
+          def filename = './prueba.yaml'
           def data = readYaml file: filename
           data.spec.template.spec.containers[0].image = imagename + ":$BUILD_NUMBER"
           writeYaml file: filename, data: data
-          kubernetesDeploy(configs: './prueba.yml', kubeconfigId: kubeconfigCredential)
+          kubernetesDeploy(configs: './prueba.yaml', kubeconfigId: kubeconfigCredential)
         }
       }
     }
