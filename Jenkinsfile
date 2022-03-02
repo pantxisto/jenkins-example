@@ -50,7 +50,7 @@ pipeline {
       steps {
         script {
           yamlPrueba.spec.template.spec.containers[0].image = imagename + ":$BUILD_NUMBER"
-          writeYaml filePrueba: prueba.yaml, data: yamlPrueba
+          writeYaml file: './prueba.yml', data: yamlPrueba
           kubernetesDeploy(configs: filePrueba, kubeconfigId: kubeconfigCredential)
         }
       }
