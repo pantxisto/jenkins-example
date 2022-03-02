@@ -3,30 +3,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: myweb
-  name: myweb
+    app: prueba
+  name: prueba
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: myweb
+      app: prueba
   template:
     metadata:
       labels:
-        app: myweb
+        app: prueba
     spec:
       containers:
-      - image: docker.myweb.example.com/justme/myweb:1
+      - image: docker.myweb.example.com/prueba:1
         imagePullPolicy: Always
-        name: myweb
+        name: prueba
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: myweb
-  name: myweb
+    app: prueba
+  name: prueba
 spec:
   ports:
   - nodePort: 32223
@@ -34,5 +34,5 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: myweb
+    app: prueba
   type: NodePort
