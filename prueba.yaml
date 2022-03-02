@@ -31,10 +31,28 @@ metadata:
   name: prueba
 spec:
   ports:
-  - nodePort: 32223
-    port: 80
-    protocol: TCP
+  - port: 2000
     targetPort: 80
   selector:
     app: prueba
-  type: NodePort
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+ name: myweb-vs-2
+spec:
+ gateways:
+ - myweb-gateway
+ hosts:
+ - myweb.example.com
+ http:
+ - match:
+    - uri:
+       prefix: "/prueba"
+   route:
+   - destination:
+       host: prueba.default.svc.cluster.local
+       port:
+         number: 2000
+
+
