@@ -1,37 +1,36 @@
 pipeline {
 
   environment {
-    registry = "docker.myweb.example.com/justme/myweb"
-    dockerImage = ""
+    imagename = "docker.myweb.example.com/justme/myweb"
+    registryCredential = 'docker-registry-id'
+    dockerImage = ''
   }
+
 
   agent any
 
   stages {
 
-    stage('Checkout Source') {
+    stage('Cloning Git') {
       steps {
         git 'https://github.com/pantxisto/jenkins-example.git'
       }
     }
 
     stage('Build image') {
-      agent {
-        docker.withRegistry('https://docker.myweb.example.com', 'docker-registry-id') {
-          dockerImage = docker.build("${env.registry}:${env.BUILD_NUMBER}")
+      steps {
+        script {
+          dockerImage = docker.build imagename + ":$BUILD_NUMBER"
         }
-      }
-      steps{
-        sh 'echo Building image...'
       }
     }
 
     stage('Push Image') {
-      agent {
-        dockerImage.push()
-      }
       steps{
-        sh 'echo Pushing image...'
+        script {
+          docker.withRegistry( 'https://docker.myweb.example.com', registryCredential ) {
+            dockerImage.push()
+          }
       }
     }
 
