@@ -3,6 +3,7 @@ pipeline {
   environment {
     imagename = "docker.myweb.example.com/justme/myweb"
     registryCredential = 'docker-registry-id'
+    kubeconfigCredential = 'mykubeconfig'
     dockerImage = ''
   }
 
@@ -48,7 +49,7 @@ pipeline {
       steps {
         container('docker') {
           script {
-            kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+            kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: kubeconfigCredential)
           }
         }
       }
