@@ -16,7 +16,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: docker.myweb.example.com/justme/myweb
+      - image: docker.myweb.example.com/justme/myweb:1
         imagePullPolicy: Always
         name: myweb
 
