@@ -47,10 +47,8 @@ pipeline {
 
     stage('Deploy App') {
       steps {
-        container('docker') {
-          script {
-            kubernetesDeploy(configs: "prueba.yaml", kubeconfigId: kubeconfigCredential)
-          }
+        script {
+          kubernetesDeploy(configs: "prueba.yaml", kubeconfigId: kubeconfigCredential)
         }
       }
     }
