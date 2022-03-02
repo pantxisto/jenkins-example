@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: prueba
+    app: prueba-deployment
   name: prueba
 spec:
   replicas: 1
@@ -16,9 +16,11 @@ spec:
         app: prueba
     spec:
       containers:
-      - image: docker.myweb.example.com/prueba:1
+      - name: prueba
+        image: docker.myweb.example.com/prueba:1
         imagePullPolicy: Always
-        name: prueba
+        ports:
+        - containerPort: 80
       imagePullSecrets:
       - name: regcred
 
@@ -28,10 +30,12 @@ kind: Service
 metadata:
   labels:
     app: prueba
-  name: prueba
+  name: prueba-service
 spec:
-  ports:
-  - port: 2000
-    targetPort: 80
   selector:
     app: prueba
+  ports:
+  - protocol: TCP
+    port: 2000
+    targetPort: 80
+  
