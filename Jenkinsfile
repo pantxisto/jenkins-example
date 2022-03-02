@@ -31,6 +31,7 @@ pipeline {
           docker.withRegistry( 'https://docker.myweb.example.com', registryCredential ) {
             dockerImage.push()
           }
+        }
       }
     }
 
