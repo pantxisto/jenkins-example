@@ -5,6 +5,7 @@ pipeline {
     registryCredential = 'docker-registry-id'
     kubeconfigCredential = 'mykubeconfig'
     dockerImage = ''
+    yamlPrueba = readYaml file: './prueba.yml'
   }
 
 
@@ -48,7 +49,9 @@ pipeline {
     stage('Deploy App') {
       steps {
         script {
-          kubernetesDeploy(configs: "prueba.yaml", kubeconfigId: kubeconfigCredential)
+          yamlPrueba.spec.template.spec.containers[0].image = imagename + ":$BUILD_NUMBER"
+          writeYaml filePrueba: prueba.yaml, data: yamlPrueba
+          kubernetesDeploy(configs: filePrueba, kubeconfigId: kubeconfigCredential)
         }
       }
     }
