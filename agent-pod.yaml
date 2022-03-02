@@ -14,7 +14,12 @@ spec:
       volumeMounts:
         - name: dockersock
           mountPath: /var/run/docker.sock
+        - name: dockercert
+          mountPath: /etc/docker/certs.d/docker.myweb.example.com/ca.cert
   volumes:
     - name: dockersock
       hostPath:
         path: /var/run/docker.sock
+    - name: dockercert
+      hostPath:
+        path: /etc/docker/certs.d/docker.myweb.example.com/ca.cert  
