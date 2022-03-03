@@ -27,7 +27,7 @@ pipeline {
       steps {
         container('docker') {
           script {
-            dockerImage = docker.build imagename + ":$BUILD_NUMBER"
+            dockerImage = docker.build imagename + ":$GIT_COMMIT"
           }
         }
       }
@@ -48,12 +48,6 @@ pipeline {
     stage('Deploy App') {
       steps {
         script {
-          // def filename = 'prueba.yaml'
-          // def data = readYaml file: filename
-          // println data.spec.template.spec.containers[0][0].image
-          // data.spec.template.spec.containers[0][0].image = imagename + ":$BUILD_NUMBER"
-          // println data.spec.template.spec.containers[0][0].image
-          // writeYaml file: 'prueba.yaml', data: data, overwrite: true
           kubernetesDeploy(configs: 'prueba.yaml', kubeconfigId: kubeconfigCredential)
         }
       }
