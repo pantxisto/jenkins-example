@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: prueba
-        image:
+        image: docker.myweb.example.com/prueba:${BUILD_NUMBER}
         imagePullPolicy: Always
         ports:
         - containerPort: 80
