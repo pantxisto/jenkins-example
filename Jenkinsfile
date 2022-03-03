@@ -53,8 +53,8 @@ pipeline {
           println data.spec.template.spec.containers[0][0].image
           data.spec.template.spec.containers[0][0].image = imagename + ":$BUILD_NUMBER"
           println data.spec.template.spec.containers[0][0].image
-          writeYaml file: 'prueba2.yaml', data: data
-          kubernetesDeploy(configs: 'prueba2.yaml', kubeconfigId: kubeconfigCredential)
+          writeYaml file: 'prueba3.yaml', data: data
+          kubernetesDeploy(configs: 'prueba3.yaml', kubeconfigId: kubeconfigCredential)
         }
       }
     }
